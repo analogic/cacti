@@ -12,7 +12,6 @@ RUN echo 'deb http://archive.ubuntu.com/ubuntu/ trusty universe' >> /etc/apt/sou
     apt-get update
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends cacti cacti-spine snmp-mibs-downloader
-RUN echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
 RUN echo "Europe/Prague" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
 VOLUME ["/var/lib/cacti/rra/", "/var/log"]
