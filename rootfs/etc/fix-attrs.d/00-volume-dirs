@@ -1,0 +1,2 @@
+/var/lib/cacti/rra/ true www-data 0644 2700
+/var/log true www-data 0644 2700

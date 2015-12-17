@@ -1,0 +1,49 @@
+#!/usr/bin/with-contenv bash
+
+function error {
+    echo ""
+    echo -e "\e[41m"
+    echo -e " \e[1m[ERROR]\e[21m $1"
+    echo -e "\e[49m"
+    echo ""
+    exit 1
+}
+
+# if [ ! -d "/data" ]; then
+#     error "No volume defined, run docker with \"\e[1m-v /your/rrd/folder:/data\e[21m\" option"
+# fi
+
+if [ -z "$DB_USER" ]; then
+    error "No DB_USER defined, please run container with -e \"DB_USER=your_db_user\" option"
+fi
+
+if [ -z "$DB_PASS" ]; then
+    error "No DB_PASS defined, please run container with -e \"DB_PASS=your_password\" option"
+fi
+
+if [ -z "$DB_NAME" ]; then
+    error "No DB_NAME defined, please run container with -e \"DB_NAME=your_name\" option"
+fi
+
+if [ -z "$DB_HOST" ]; then
+    error "No DB_HOST defined, please run container with -e \"DB_HOST=your_db_address\" option"
+fi
+
+# Check if Cacti DB exists
+
+if [ $(echo "show tables" | mysql -u $DB_USER -h $DB_HOST -p$DB_PASS $DB_NAME | wc -l) -eq 0 ]; then
+    mysql -u $DB_USER -h $DB_HOST -p$DB_PASS $DB_NAME < /usr/share/cacti/conf_templates/cacti.sql
+fi
+
+# Update Cacti config
+
+sed -i 's/$DB_NAME/'$DB_NAME'/g' /etc/cacti/debian.php
+sed -i 's/$DB_HOST/'$DB_HOST'/g' /etc/cacti/debian.php
+sed -i 's/$DB_USER/'$DB_USER'/g' /etc/cacti/debian.php
+sed -i 's/$DB_PASS/'$DB_PASS'/g' /etc/cacti/debian.php
+
+sed -i 's/$DB_NAME/'$DB_NAME'/g' /etc/cacti/spine.conf
+sed -i 's/$DB_HOST/'$DB_HOST'/g' /etc/cacti/spine.conf
+sed -i 's/$DB_USER/'$DB_USER'/g' /etc/cacti/spine.conf
+sed -i 's/$DB_PASS/'$DB_PASS'/g' /etc/cacti/spine.conf
+
