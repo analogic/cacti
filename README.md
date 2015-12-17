@@ -1,4 +1,4 @@
-# Docker container for cacti installation (S6+Apache+Cacti)
+# Docker container with full Cacti installation (S6+Apache+Cacti+Cacti spine)
 
 run with:
 
