@@ -11,7 +11,7 @@ docker run --name cacti \
     -e "DB_PASS=<db_password>" \
     -e "DB_HOST=<db_host>" \
     -e "DB_NAME=<db_name>" \
-    cacti
+    analogic/cacti
 ```
 
 You need precreate db user and db itself. Tables are created automaticaly at first start.
