@@ -14,4 +14,4 @@ docker run --name cacti \
     analogic/cacti
 ```
 
-You need precreate db user and db itself. Tables are created automaticaly at first start.
+You need pre-create db user and db itself. Tables are created automaticaly at first start.
