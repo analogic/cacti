@@ -1,4 +1,4 @@
-FROM analogic:trusty
+FROM analogic/trusty
 MAINTAINER info@analogic.cz
 
 RUN echo 'deb http://archive.ubuntu.com/ubuntu/ trusty universe' >> /etc/apt/sources.list && \
